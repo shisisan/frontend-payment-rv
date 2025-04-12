@@ -1,13 +1,9 @@
-import { Box, Flex } from '@chakra-ui/react';
-
-import { ColorModeButton } from '@/components/ui/color-mode';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 
 export const Header = () => {
   return (
-    <Flex as="header" width="full" align="center">
-      <Box marginLeft="auto">
-        <ColorModeButton />
-      </Box>
+    <Flex as="header" width="full" align="center" justify="space-between" py={4}>
+      <Heading size="md" color="text.accent">Discord Dashboard</Heading>
     </Flex>
   );
 };

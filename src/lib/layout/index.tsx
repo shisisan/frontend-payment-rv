@@ -13,11 +13,11 @@ type LayoutProps = {
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <Box margin="0 auto" maxWidth={800} transition="0.5s ease-out">
-      <Box margin="8">
+    <Box margin="0 auto" maxWidth={900} transition="0.5s ease-out" bg="#101826" color="white">
+      <Box px={6} py={4}>
         <Header />
         <Toaster />
-        <Box as="main" marginY={22}>
+        <Box as="main" marginY={8}>
           {children}
         </Box>
         <Footer />
