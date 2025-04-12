@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #101826;
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Reset box sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

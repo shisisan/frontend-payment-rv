@@ -12,11 +12,13 @@ import {
 } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/react'
 import { useColorModeValue } from '@/components/ui/color-mode'
+import Loading from '@/components/ui/loading'
 
 export default function AuthCallback() {
   const router = useRouter()
   const [debugInfo, setDebugInfo] = useState<string>('')
   const bgColor = useColorModeValue('gray.50', 'gray.700')
+  const [status, setStatus] = useState<'loading' | 'authenticated' | 'error'>('loading')
 
   const addDebugInfo = (info: string) => {
     console.log(`[AuthCallback] ${info}`)
@@ -154,6 +156,11 @@ export default function AuthCallback() {
     return () => clearTimeout(timer)
   }, [router])
 
+  // If we're in the loading state, show the loading component
+  if (status === 'loading') {
+    return <Loading />
+  }
+
   return (
     <Container centerContent maxW="container.md" py={10}>
       <VStack spacing={6} width="100%">
@@ -177,7 +184,6 @@ export default function AuthCallback() {
             fontSize="xs"
             whiteSpace="pre-wrap"
             overflowX="auto"
-            maxHeight="300px"
             overflowY="auto"
           >
             {debugInfo || 'Initializing...'}

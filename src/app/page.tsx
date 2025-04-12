@@ -9,12 +9,12 @@ import {
   Heading,
   Text,
   Stack,
-  Center,
-  Spinner
+  Center
 } from '@chakra-ui/react'
 import { useAuth } from '@/lib/auth/AuthContext'
 import { useRouter } from 'next/navigation'
 import { FaDiscord } from 'react-icons/fa'
+import Loading from '@/components/ui/loading'
 
 export default function Home() {
   const { isAuthenticated, isLoading } = useAuth()
@@ -34,20 +34,22 @@ export default function Home() {
 
   // Show loading spinner while checking authentication
   if (isLoading) {
-    return (
-      <Container centerContent height="100vh">
-        <Center height="100%">
-          <Spinner size="xl" color="blue.500" />
-        </Center>
-      </Container>
-    )
+    return <Loading />
   }
 
   return (
-    <Box bg="black" minH="100vh" color="white">
-      <Container maxW="container.md" py={16}>
-        <Stack textAlign="center" align="center">
-          <Stack>
+    <Box minH="100vh" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+      <Container 
+        maxW="container.md" 
+        py={16}
+        px={8}
+        bg="#0a0e18" 
+        borderRadius="lg" 
+        boxShadow="lg"
+        textAlign="center"
+      >
+        <Stack spacing={8} align="center">
+          <Stack spacing={4}>
             <Heading size="xl">Welcome</Heading>
             <Text fontSize="lg">Login with Discord to continue</Text>
           </Stack>
@@ -58,16 +60,17 @@ export default function Home() {
             colorScheme="blue"
             bg="#5865F2"
             _hover={{ bg: "#4752C4" }}
+            leftIcon={<FaDiscord />}
+            px={8}
           >
-            <FaDiscord /> Login with Discord
+            Login with Discord
           </Button>
-          <Box position="absolute" bottom={4}>
-            <Text fontSize="sm" color="gray.500">
-              2025 - agustinusnathaniel.com
-            </Text>
-          </Box>
         </Stack>
       </Container>
+      
+      <Text fontSize="sm" color="gray.500" mt={8}>
+        {new Date().getFullYear()} - agustinusnathaniel.com
+      </Text>
     </Box>
   )
 } 
