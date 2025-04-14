@@ -26,11 +26,13 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
+  /* Auto redirect to dashboard disabled
   // If the user is authenticated and trying to access the login page, redirect to the dashboard
   if (isAuthenticated && request.nextUrl.pathname === '/') {
     console.log(`[Middleware] Redirecting to /dashboard from ${request.nextUrl.pathname}`)
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
+  */
 
   return NextResponse.next()
 }

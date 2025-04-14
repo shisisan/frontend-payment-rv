@@ -9,20 +9,45 @@ import {
   Button,
   Image,
   Center,
-  Separator,
   useDisclosure
 } from '@chakra-ui/react'
 import { useAuth } from '@/lib/auth/AuthContext'
 import { useApi } from '@/lib/api'
-import { useState } from 'react'
-import Loading from '@/components/ui/loading'
+import { useState, useEffect } from 'react'
+import DashboardSkeleton from '@/components/ui/DashboardSkeleton'
 
+// Show skeleton immediately before any processing
 export default function Dashboard() {
-  const { user, logout, debugInfo, refreshUserData, debugAuth } = useAuth()
+  // Tampilkan skeleton terlebih dahulu
+  const [showSkeleton, setShowSkeleton] = useState(true);
+  
+  // Gunakan setTimeout untuk menunda rendering konten sebenarnya
+  // Ini memastikan skeleton terlihat bahkan pada koneksi cepat
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSkeleton(false);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
+  // Selalu tampilkan skeleton pada render pertama
+  if (showSkeleton) {
+    return <DashboardSkeleton />;
+  }
+  
+  // Setelah render pertama, tampilkan konten dengan logika loading
+  return <DashboardContent />;
+}
+
+// Separate component for better initial loading performance
+function DashboardContent() {
+  const { user, logout, debugInfo, refreshUserData, debugAuth, isLoading } = useAuth()
   const api = useApi()
   const [backendDebug, setBackendDebug] = useState<string>('')
   const [isLoadingDebug, setIsLoadingDebug] = useState(false)
   const [isRefreshing, setIsRefreshing] = useState(false)
+  const [avatarUrl, setAvatarUrl] = useState<string>('')
 
   // Get data from localStorage for debugging
   const rawUserData = typeof window !== 'undefined' ? localStorage.getItem('user') : null
@@ -55,21 +80,37 @@ export default function Dashboard() {
     }
   }
 
-  // If no user data, show loading component
-  if (!user) {
-    return <Loading />
+  // Set correct avatar URL
+  useEffect(() => {
+    if (user?.avatar) {
+      // Check if the avatar is already a full URL
+      if (user.avatar.startsWith('http')) {
+        setAvatarUrl(user.avatar);
+        console.log('Using avatar URL directly:', user.avatar);
+      } else {
+        // Create Discord CDN URL
+        const discordAvatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+        setAvatarUrl(discordAvatarUrl);
+        console.log('Created Discord CDN URL:', discordAvatarUrl);
+      }
+    }
+  }, [user]);
+
+  // Show skeleton while loading or if no user data
+  if (isLoading || !user) {
+    return <DashboardSkeleton />
   }
 
   return (
     <Container maxW="container.xl" py={10}>
       <Box mb={6}>
-        <Heading color="text.primary">Discord Dashboard</Heading>
+        <Heading color="text.primary">Revitalize Community</Heading>
       </Box>
 
       <Box p={6} borderWidth="1px" borderRadius="lg" bg="bg.secondary" mb={6}>
         <Flex direction={{ base: 'column', md: 'row' }} align="center" mb={6}>
           {/* User Avatar */}
-          {user.avatar ? (
+          {avatarUrl ? (
             <Box 
               mr={{ base: 0, md: 6 }}
               mb={{ base: 4, md: 0 }}
@@ -79,7 +120,7 @@ export default function Dashboard() {
               height="128px"
             >
               <Image
-                src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`}
+                src={avatarUrl}
                 alt="Discord Avatar"
                 width="100%"
                 height="100%"
@@ -128,7 +169,7 @@ export default function Dashboard() {
               <Button 
                 variant="outline" 
                 onClick={handleRefreshUserData}
-                isLoading={isRefreshing}
+                loading={isRefreshing}
                 mr={2}
                 borderColor="button.primary.bg"
                 color="button.primary.bg"
@@ -176,6 +217,11 @@ export default function Dashboard() {
             <Text color="text.primary">{user.email}</Text>
           </Box>
         )}
+        
+        <Box mb={3}>
+          <Text fontWeight="bold" mb={1} color="text.accent">Avatar URL:</Text>
+          <Text color="text.primary" fontSize="sm" wordBreak="break-all">{avatarUrl || 'No avatar'}</Text>
+        </Box>
       </Box>
       
       <Box p={4} borderWidth="1px" borderRadius="md" bg="bg.secondary" mb={6}>
@@ -184,7 +230,7 @@ export default function Dashboard() {
           <Button 
             size="sm" 
             onClick={testBackendDebug}
-            isLoading={isLoadingDebug}
+            loading={isLoadingDebug}
             bg="button.primary.bg"
             color="button.primary.text"
             _hover={{ bg: "button.primary.hover" }}
@@ -193,7 +239,7 @@ export default function Dashboard() {
           </Button>
         </Flex>
         
-        <Separator mb={4} borderColor="gray.600" />
+        <Box mb={4} borderTopWidth="1px" borderColor="gray.600" />
         
         <Box mb={4}>
           <Text fontWeight="bold" mb={2} color="text.accent">Local Storage:</Text>

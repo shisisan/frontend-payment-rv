@@ -43,7 +43,7 @@ export const useAuth = () => useContext(AuthContext)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true) // Start in loading state to show skeleton immediately
   const [debugInfo, setDebugInfo] = useState<string>('')
   const router = useRouter()
 
@@ -264,6 +264,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Check if user is authenticated on initial load
     addDebugInfo('Initializing AuthContext')
     
+    // IMPORTANT: Keep isLoading true until we've actually completed authentication check
+    // This ensures the skeleton is shown immediately during initial load
+    
     // First check cookies (server-side compatible)
     const cookieToken = Cookies.get('auth_token')
     const cookieUser = Cookies.get('user') || Cookies.get('user_data')  // Try both cookie names
@@ -321,6 +324,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('user', cookieUser)
     }
 
+    // Process auth data - execute immediately to show skeleton faster
     if (tokenToUse && userDataToUse) {
       try {
         addDebugInfo('Attempting to parse user data')
@@ -446,6 +450,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(normalizedUser)
         setToken(tokenToUse)
         addDebugInfo('User state updated')
+        
+        // Now that user data is available, end loading state
+        setIsLoading(false);
+        addDebugInfo('Finished loading');
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error'
         addDebugInfo(`Failed to parse user data: ${errorMessage}`)
@@ -466,6 +474,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           duration: 5000,
           closable: true,
         })
+        
+        // End loading even if there was an error
+        setIsLoading(false);
+        addDebugInfo('Finished loading after error');
       }
     } else if (tokenToUse) {
       // We have a token but no user data, try to fetch user data from server
@@ -482,18 +494,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           addDebugInfo('Could not fetch user data, logging out')
           logout()
         }
-        setIsLoading(false)
+        
+        // End loading state once user data has been processed
+        setIsLoading(false);
+        addDebugInfo('Finished loading after server fetch');
+      }).catch(error => {
+        addDebugInfo(`Error during user data fetch: ${error instanceof Error ? error.message : String(error)}`);
+        setIsLoading(false);
+        addDebugInfo('Finished loading after fetch error');
       })
       
       // Don't set isLoading to false yet, we're still loading data
-      return
+      return;
     } else {
       addDebugInfo('No authentication data found')
+      // No auth data, end loading immediately
+      setIsLoading(false);
+      addDebugInfo('Finished initialization - no auth data');
     }
-    
-    setIsLoading(false)
-    addDebugInfo('Finished initialization')
-  }, [])
+  }, []);
 
   const getAuthHeader = () => {
     if (!token) return {}

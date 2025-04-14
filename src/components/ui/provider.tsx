@@ -12,7 +12,10 @@ const system = createSystem(defaultConfig, {
         primary: { value: '#5865F2' },
         'primary.hover': { value: '#4752C4' },
         'text.primary': { value: 'white' },
-        'text.secondary': { value: '#CBD5E0' }
+        'text.secondary': { value: '#CBD5E0' },
+        // Skeleton colors
+        'skeleton.startColor': { value: '#2D3748' },
+        'skeleton.endColor': { value: '#4A5568' }
       },
       fonts: {
         heading: { value: 'system-ui, sans-serif' },
@@ -24,9 +27,17 @@ const system = createSystem(defaultConfig, {
         'chakra-body-bg': { 
           _light: { value: '#101826' }, 
           _dark: { value: '#101826' } 
+        },
+        'chakra-skeleton-startColor': {
+          _light: { value: '#2D3748' },
+          _dark: { value: '#2D3748' }
+        },
+        'chakra-skeleton-endColor': {
+          _light: { value: '#4A5568' },
+          _dark: { value: '#4A5568' }
         }
       }
-    }
+    },
   },
   cssVarsPrefix: 'rv'
 });
