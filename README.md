@@ -1,57 +1,132 @@
-<img src="https://og.sznm.dev/api/generate?heading=nextarter-chakra&text=Next.js+template+with+Chakra-UI+and+TypeScript+setup.&template=color&center=true&height=330" />
+# Revitalize Police Pursuit Frontend
 
-<div align="center">
-  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fagustinusnathaniel%2Fnextarter-chakra" target="_blank"><img src="https://vercel.com/button" alt="Deploy with Vercel" /></a> <a href="https://app.netlify.com/start/deploy?repository=https://github.com/agustinusnathaniel/nextarter-chakra" target="_blank"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" /></a> <a href="https://railway.app/new/template/aqmmai?referralCode=9lKVVo" target="_blank"><img src="https://railway.app/button.svg" alt="Deploy on Railway" height="32px" /></a>
+🌐 Frontend of the Revitalize Police Pursuit website  
+**Tech Stack:** Next.js, Chakra UI, TypeScript
 
-<a href="https://stackblitz.com/github/agustinusnathaniel/nextarter-chakra" target="_blank"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Open in StackBlitz" /></a>
+---
 
-  <p>This is a <a href="https://nextjs.org/" target="_blank">Next.js</a> project bootstrapped with <code>create-next-app</code>, added with <a href="https://chakra-ui.com" target="_blank"><b>Chakra UI</b></a> and <a href="https://www.typescriptlang.org" target="_blank"><b>TypeScript</b></a> setup. <br/> Start developing right away!</p>
+## Table of Contents
 
-</div>
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Development Server](#running-the-development-server)
+  - [Build for Production](#build-for-production)
+- [Folder Structure](#folder-structure)
+- [Scripts](#scripts)
+- [Contributing](#contributing)
+- [License](#license)
 
-## 🔋 ⚡ Battery Packed template
-
-- 🚀 **Next.js 15** - **React 18**
-- ⛓️ **TypeScript**
-- **Chakra-UI** v3
-- ✔️ **toolings** for linting, formatting, and conventions configured
-  - `eslint`, `prettier`, `husky`, `lint-staged`, `commitlint`, `commitizen`, and `standard-version`
-  - `pre-commit`, `pre-push`, `commit-msg`, `prepare-commit-msg` hook configured
-- 🔎 SEO optimization configured - with `next-sitemap`.
-  - you'll need to reconfigure or tinker with it to get it right according to your needs, but it's there if you need it.
-- 🎨 basic responsive layout configured - don't need it? just remove it 😃
-- 🤖 **Automatic Dependency Update** with [Renovate](https://renovatebot.com/)
-- 🏎️ **Turbo** setup
-- 🧪 **Playwright** E2E Test
-
-[![CodeFactor](https://www.codefactor.io/repository/github/agustinusnathaniel/nextarter-chakra/badge)](https://www.codefactor.io/repository/github/agustinusnathaniel/nextarter-chakra)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=alert_status)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=bugs)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=code_smells)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra)
-
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-
-## Pre-requisites
-
-1. [Node.js](https://nodejs.org/en/) or nvm installed.
-2. `pnpm` installed.
+---
 
 ## Getting Started
 
-1. You can either click `Use this template` button on this repository and clone the repo or directly from your terminal:
+### Prerequisites
 
-```bash
-npx degit agustinusnathaniel/nextarter-chakra <YOUR_APP_NAME>
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+
+### Installation
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/shisisan/frontend-payment-rv.git
+   cd frontend-payment-rv
+   ```
+
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+   _or if you use yarn:_
+   ```sh
+   yarn install
+   ```
+
+### Running the Development Server
+
+Start the local development server:
+
+```sh
+npm run dev
+```
+_or_
+```sh
+yarn dev
 ```
 
-2. After cloning the project, run this command: `pnpm` or `pnpm install`
+- The app will be available at [http://localhost:3000](http://localhost:3000).
 
-3. Then, run the development server:
+### Build for Production
 
-```bash
-pnpm dev
+To build the app for production:
+
+```sh
+npm run build
+```
+_or_
+```sh
+yarn build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To start in production mode:
 
-You can start editing the page by modifying `src/lib/pages/index.tsx`. The page auto-updates as you edit the file.
+```sh
+npm start
+```
+_or_
+```sh
+yarn start
+```
 
-- [References](/references.md)
+---
+
+## Folder Structure
+
+Here’s an overview of the primary folders in this project:
+
+```
+frontend-payment-rv/
+├── public/             # Static files (images, fonts, etc.)
+├── src/
+│   ├── components/     # Reusable React components
+│   ├── pages/          # Next.js pages (routes)
+│   ├── styles/         # Global and component styles (CSS/Chakra)
+│   ├── utils/          # Utility functions and helpers
+│   ├── hooks/          # Custom React hooks
+│   ├── contexts/       # React context providers
+│   └── types/          # TypeScript type definitions
+├── .env.example        # Example environment variables
+├── package.json        # Project metadata and scripts
+├── tsconfig.json       # TypeScript configuration
+└── README.md           # Project documentation
+```
+
+> **Note:**  
+> - All main source code is under the `/src` directory.
+> - The `/pages` folder follows the [Next.js routing conventions](https://nextjs.org/docs/routing/introduction).
+> - Chakra UI theming and configuration may be found in `/src/styles` or `/src/theme`.
+
+---
+
+## Scripts
+
+Common scripts (see `package.json` for more):
+
+- `dev` – Start development server
+- `build` – Build for production
+- `start` – Start production server
+- `lint` – Run linter
+- `format` – Format code using Prettier
+
+---
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+---
+
+## License
+
+[MIT](LICENSE)
